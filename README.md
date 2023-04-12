@@ -2,7 +2,7 @@
 This holds example `Dockerfile` for building a Docker image that includes R packages.
 
 ## How to directly use the Docker image built based on this example `Dockerfile`?
-Please refer to the below section for [how to use as Singularity container on clusters](#use-as-singularity-container-on-clusters).
+Please refer to the below section for [how to use as Singularity container on clusters](#step-5.-use-as-singularity-container-on-clusters).
 
 ## How to reuse this `Dockerfile` for my case?
 Different projects may require different R packages. If the list of R packages included in this example `Dockerfile`
