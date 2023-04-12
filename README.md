@@ -1,5 +1,8 @@
 # docker_R
-This holds example `Dockerfile` for building a docker image that includes R packages.
+This holds example `Dockerfile` for building a Docker image that includes R packages.
+
+## How to directly use the Docker image built based on this example `Dockerfile`?
+Please refer to the below section for [how to use as Singularity container on clusters](#use-as-singularity-container-on-clusters).
 
 ## How to reuse this `Dockerfile` for my case?
 Different projects may require different R packages. If the list of R packages included in this example `Dockerfile`
@@ -19,7 +22,7 @@ does not fit your purpose, e.g., you hope to add more, you can make a new `Docke
   
 ### Step 2. Write `Dockerfile`
 You have two options - just choose one of them:
-#### Start from this example one:
+#### Way 1: Start from this example one:
 In other words, you'll use this example Docker image as a base image. This will make building step faster.
 Your `Dockerfile` will look like this:
 
@@ -29,13 +32,16 @@ FROM audreycluo/r-packages-for-cubic:<tag>
 # below: install additional R packages you'd like
 ```
 
-#### Start from scratch:
+#### Way 2: Start from scratch:
 Just copy example `Dockerfile` from this github repository. Modify it or add more commands for your purpose.
 
 ### Step 3. Build Docker image
 TODO: add instructions here
 
 ### Step 4. Push to your Docker Hub repository
+TODO: add instructions here
+
+### Step 5. Use as Singularity container on clusters
 TODO: add instructions here
 
 ## Debugging
