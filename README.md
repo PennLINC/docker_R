@@ -1,7 +1,7 @@
 # docker_R
-This holds an example `Dockerfile` for building a Docker image that includes R packages.
+This repo holds an example `Dockerfile` for building a Docker image that includes R packages.
 
-## How to directly use the Docker image built based on this example `Dockerfile`:
+## How to directly use the Docker image built based on our example `Dockerfile`:
 Please refer to the below section for [how to use as Singularity container on clusters](#step-5.-use-as-singularity-container-on-clusters).
 
 ## How to reuse this `Dockerfile` for your own purposes:
@@ -44,7 +44,7 @@ RUN install2.r --error --ncpus -4 \
 Just copy the example `Dockerfile` from this github repository. Modify it or add more commands for your purposes.
 
 ### Step 3. Build Docker image
-a. If you're using a Mac, first input `export DOCKER_BUILDKIT=0` and `export COMPOSE_DOCKER_CLI_BUILD=0` into the Mac bash terminal before running `docker build` below.  
+a. If you're using a Mac, first enter `export DOCKER_BUILDKIT=0` and `export COMPOSE_DOCKER_CLI_BUILD=0` into the Mac bash terminal before running `docker build` below.  
 b. To build your Docker image, you need to run the following command:
 
 * If you're using Way 1, your command should look like:
@@ -85,6 +85,23 @@ $ docker run --rm -it audreycluo/r-packages-for-cubic:<tag> R
 $ singularity pull docker://audreycluo/r-packages-for-cubic:<tag>
 ```
 After a while, you should have a .sif file in your directory. 
+
+To run docker on a cluster, use the following commands:
+
+Example:
+```
+singularity run --cleanenv \
+   /cbica/projects/<project_name>/software/docker/r-packages-for-cubic_<tag>.sif \
+    R
+```
+
+General format:
+```
+singularity run --cleanenv \
+    <docker_repo>_<docker_tag>.sif \
+    <command_you_want_to_run>
+```
+You can put the above commands for `singularity run` in a bash file and submit the bash file as a job.
 
 ## Debugging
 Some R packages require installing some necessary libraries in the Docker image system (e.g., `libhdf5-dev`)
