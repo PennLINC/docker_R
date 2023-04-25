@@ -46,60 +46,55 @@ Just copy the example `Dockerfile` from this github repository. Modify it or add
 ### Step 3. Build Docker image
 a. If you're using a Mac, first enter `export DOCKER_BUILDKIT=0` and `export COMPOSE_DOCKER_CLI_BUILD=0` into the Mac bash terminal before running `docker build` below.  
 b. To build your Docker image, you need to run the following command:
-
-* If you're using Way 1, your command should look like:
-```
-$ docker build -t audreycluo/r-packages-for-cubic:<tag> .
-```
-
-* If you're using Way 2, make sure to input your own username, docker repo, and tag. 
+ 
 ```
 $ docker build -t <docker_username>/<docker_repo>:${docker_tag} .
 ```
+
+For example:
+```
+$ docker build -t <docker_username>/r-packages-for-cubic:0.0.1 .
+```
+
 Important formatting tips include:
 * Remember the trailing period!! And remove any spaces after the period!
 * An example `docker_tag` could be `0.0.1`
 * The Dockerfile should be in the same folder as current working directory that your terminal is using
 
 ### Step 4. Push to your Docker Hub repository
-* Way 1
-```
-$ docker push "audreycluo/r-packages-for-cubic:<tag>"
-```
-
-* Way 2
+ 
 ```
 $ docker push "<docker_username>/<docker_repo>:${docker_tag}"
 ```
 
 ### Step 5. Run a test locally (optional, but recommended)
-* Way 1 (Way 2 is analogous to above instructions) 
+ 
 ```
-$ docker run --rm -it audreycluo/r-packages-for-cubic:<tag> R
+$ docker run --rm -it <docker_username>/<docker_repo>:${docker_tag} R
 ```
 ### Step 6. Use as Singularity container on clusters
 * If you don't already have a `software` directory in your project directory, we suggest you make one. Then create a `docker` sub-folder.
 * Pull the Docker image onto cluster:
-    * Way 1 
+ 
 ```
-$ singularity pull docker://audreycluo/r-packages-for-cubic:<tag>
+$ singularity pull docker://<docker_username>/<docker_repo>:${docker_tag}
 ```
 After a while, you should have a .sif file in your directory. 
 
 To run docker on a cluster, use the following commands:
-
-Example:
-```
-singularity run --cleanenv \
-   /cbica/projects/<project_name>/software/docker/r-packages-for-cubic_<tag>.sif \
-    R
-```
-
+ 
 General format:
 ```
 singularity run --cleanenv \
     <docker_repo>_<docker_tag>.sif \
     <command_you_want_to_run>
+```
+
+Example:
+```
+singularity run --cleanenv \
+   /cbica/projects/<project_name>/software/docker/<docker_repo>_<docker_tag>.sif \
+    R
 ```
 You can put the above commands for `singularity run` in a bash file and submit the bash file as a job.
 
