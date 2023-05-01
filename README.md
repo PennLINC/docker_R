@@ -2,7 +2,7 @@
 This repo holds an example `Dockerfile` for building a Docker image that includes R packages.
 You may use it on clusters where R packages are hard to install.
 
-The Docker image built based on this example `Dockerfile` is publicly available [here](https://hub.docker.com/r/audreycluo/r-packages-for-cubic). The tag version this example `Dockerfile` generates is `r_forNetworkReplication0.0.3`.
+The Docker image built based on this example `Dockerfile` is publicly available [here](https://hub.docker.com/r/audreycluo/r-packages-for-cubic). The tag version this example `Dockerfile` generates is `r_forNetworkReplication0.0.3`. Warning: the version of Docker image this example `Dockerfile` generates **may not** be the up-to-date latest version you see on the Docker Hub!
 
 ## How to directly use the Docker image built based on this example `Dockerfile`:
 Please refer to the below section for [how to use as Singularity container on clusters](#step-6-use-as-singularity-container-on-clusters).
@@ -11,10 +11,6 @@ Please refer to the below section for [how to use as Singularity container on cl
 Different projects may require different R packages. If the list of R packages included in this example `Dockerfile`
 does not fit your purposes, e.g., you hope to add more, you can make a new `Dockerfile` and build your own Docker image!
 When doing so, make sure you push the built Docker image to **your own** Docker Hub account (we'll cover how to do this below)
-
-Other formatting tips include:
-* removing spaces at the end of each line of your Dockerfile
-* making sure that there aren't comments at the end of each line. Comments should be separate lines from commands. 
 
 ### Step 1. Prep
 1. Create a [Docker Hub](https://hub.docker.com/) account if you don't have one - it's free!  
@@ -45,12 +41,18 @@ RUN install2.r --error --ncpus -4 \
     ...
 ```
 
-Here, first you need to find out the tag version of `audreycluo/r-packages-for-cubic`'s Docker image you want to use as a base image. If you're satified with packages installed in this example `Dockerfile`, then please find its corresponding tag version number at the beginning of this README file. Then please replace `<tag>` in line #1 with that tag string.
+Here, first you need to find out the tag version of `audreycluo/r-packages-for-cubic`'s Docker image you want to use as a base image. If you're satified with packages included in this example `Dockerfile`, then please find its corresponding tag version number at the beginning of this README file. Then please replace `<tag>` in line #1 with that tag string.
+
+!! Warning !! The version of Docker image this example `Dockerfile` generates **may not** be the up-to-date latest version you see on the Docker Hub! So please check out the version number at the beginning of this README file!
 
 #### Way 2: Build a Docker image from scratch:
 Just copy the example `Dockerfile` from this github repository. Modify it or add more commands for your purposes.
 
 !!warning!! Do not overwrite the example `Dockerfile` in this github repository and push it back to github! Best keep your own `Dockerfile` somewhere else.
+
+#### Formatting tips when preparing `Dockerfile`
+* removing spaces at the end of each line of your Dockerfile
+* making sure that there aren't comments at the end of each line. Comments should be separate lines from commands. 
 
 ### Step 3. Build Docker image
 By following `Step 2`, you should have a new `Dockerfile` ready for building a Docker image.
@@ -109,7 +111,9 @@ $ singularity pull docker://audreycluo/r-packages-for-cubic:${docker_tag}
 
 This prebuilt image is located at: https://hub.docker.com/r/audreycluo/r-packages-for-cubic. Find the tag name you want to use and replace `${docker_tag}` in above command with it. The tag version number this example `Dockerfile` generates can be found at the beginning of this README file.
 
-!! warning !! You can pull Docker images from this Docker Hub repository, but **do NOT push** to it!!! - this is Audrey's personal account!
+!! Warning !! The version of Docker image this example `Dockerfile` generates **may not** be the up-to-date latest version you see on the Docker Hub! So please check out the version number at the beginning of this README file!
+
+!! Warning !! You can pull Docker images from this Docker Hub repository, but **do NOT push** to it!!! - this is Audrey's personal account!
 </details>
 
 <br>
@@ -135,7 +139,7 @@ singularity run --cleanenv \
 
 Notes and tips:
 * Here, `-B /directory/of/your/data,/directory/of/your/R_scripts` allows you to mount the data and scripts directories so that singularity can read and write data inside it. 
-    * If your data exists inside your current working directory, you might do -B $PWD;
+    * If your data exists inside your current working directory, you might do `-B $PWD`;
     * To only mount one directory, use `-B /directory/you/want/to/bind`
     * Note: you might skip this `-B` argument if you're using PennMed CUBIC clusters - directories of your project account have been automatically mounted.
 * You can put the above command of `singularity run` in a bash file and submit the bash file as a job.
