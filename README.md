@@ -111,7 +111,7 @@ $ singularity pull docker://audreycluo/r-packages-for-cubic:${docker_tag}
 
 This prebuilt image is located at: https://hub.docker.com/r/audreycluo/r-packages-for-cubic. Find the tag name you want to use and replace `${docker_tag}` in above command with it. The tag version number this example `Dockerfile` generates can be found at the beginning of this README file.
 
-!! Warning !! The version of Docker image this example `Dockerfile` generates **may not** be the up-to-date latest version you see on the Docker Hub! So please check out the version number at the beginning of this README file!
+!! Warning !! The version of Docker image this example `Dockerfile` generates **may not** be the up-to-date latest version you see on the Docker Hub! So please check out the version number at the beginning of this README file if you want to use that!
 
 !! Warning !! You can pull Docker images from this Docker Hub repository, but **do NOT push** to it!!! - this is Audrey's personal account!
 </details>
