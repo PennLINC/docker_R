@@ -1,6 +1,7 @@
 
 # Building Docker file for using R packages on CUBIC
 # When update this Dockerfile, please update tag of pre-built docker image `audreycluo/r-packages-for-cubic:<tag>`
+# And don't forget to update the version described in the beginning of the accompanying README.
  
  
 # Base image: using pre-built docker image
