@@ -33,3 +33,20 @@ docker push pennlinc/docker_r:${docker_tag}
 ```
 
 Then pull it as a Singularity image on cubic to test out.
+
+Now, there are two more things to be done:
+* Update [Releases.md](Releases.md): add this version + some descriptions of the changes
+* Tag github repo with the version number, to make sure we also mark the `Dockerfile` with the corresponding tag version:
+
+```
+git tag -a ${docker_tag} -m "some messages"
+git push origin ${docker_tag}
+```
+
+## Other tips
+Other basic commands of `git tag`:
+
+```
+git tag     # list all the tags
+git show <versionName>   # print the messages of the tag + commits
+```

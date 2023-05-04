@@ -1,38 +1,43 @@
 # docker_R
-This repo holds an example `Dockerfile` for building a Docker image that includes R packages.
-You may use it on clusters where R packages are hard to install.
+This repo holds an example `Dockerfile` for building a Docker image that includes R and R packages.
+You may use the Docker image on clusters where R packages are hard to install.
 
-The Docker image built based on this example `Dockerfile` is publicly available [here](https://hub.docker.com/r/audreycluo/r-packages-for-cubic). The tag version this example `Dockerfile` generates is `r_forNetworkReplication0.0.3`. Warning: the version of Docker image this example `Dockerfile` generates **may not** be the up-to-date latest version you see on the Docker Hub!
+The Docker image built based on this example `Dockerfile` is publicly available on PennLINC Docker Hub repository `pennlinc/docker_r`: 
 
-## How to directly use the Docker image built based on this example `Dockerfile`:
+https://hub.docker.com/r/pennlinc/docker_r
+
+Descriptions of tagged versions of this Docker image can be found in [Releases.md](Releases.md).
+
+## How to directly use the example Docker image?
 Please refer to the below section for [how to use as Singularity container on clusters](#step-6-use-as-singularity-container-on-clusters).
 
-## How to reuse this `Dockerfile` for your own purposes:
+## How to reuse example `Dockerfile` and Docker image for your own purposes?
 Different projects may require different R packages. If the list of R packages included in this example `Dockerfile`
 does not fit your purposes, e.g., you hope to add more, you can make a new `Dockerfile` and build your own Docker image!
 When doing so, make sure you push the built Docker image to **your own** Docker Hub account (we'll cover how to do this below)
 
-### Step 1. Prep
+### Step 1. Preparations
 1. Create a [Docker Hub](https://hub.docker.com/) account if you don't have one - it's free!  
 2. Create a new repository under your Docker Hub account. Remember the name - we'll use it later.
 3. Install [Docker](https://docs.docker.com/get-docker/) on your laptop. On Mac, make sure Docker Desktop App is *running*! I.e., You should see a static icon of Docker in your computer's menu bar.
 4. Log into your Docker account on the Docker App locally 
 
     
-!! warning !! 
+⚠️ ⚠️ WARNING ⚠️ ⚠️
 * You cannot use cubic or any cluster to build docker image!
 * It's better to use Linux system computer or Mac with Intel chip (instead of M1 or M2 chip)
   * Mac with M1/M2 chip has different architecture lol. Talk to informatics team for how to proceed.
   
 ### Step 2. Write `Dockerfile`
 You have two options - just choose one of them:
+
 #### Way 1: Use example Docker image as a base image, and build upon it:
-We have built Docker image using this example `Dockerfile`. The Docker images are publicly available [here](https://hub.docker.com/r/audreycluo/r-packages-for-cubic). One way to build your own Docker image is to build upon this example Docker image: you'll use this example Docker image as a base image, and add additional R packages you'd like. This will make Step 3 (`docker build`) faster.
+One way to build your own Docker image is to build upon this example Docker image: you'll use this example Docker image as a base image, and add additional R packages you'd like. This will make Step 3 (`docker build`) faster.
 
 You still need to write a file called `Dockerfile`. Different from the example `Dockerfile`, your `Dockerfile` should look something like this:
 
 ```
-FROM audreycluo/r-packages-for-cubic:<tag>
+FROM pennlinc/docker_r:<tag>
 
 # install additional R packages 
 RUN install2.r --error --ncpus -4 \
@@ -41,14 +46,17 @@ RUN install2.r --error --ncpus -4 \
     ...
 ```
 
-Here, first you need to find out the tag version of `audreycluo/r-packages-for-cubic`'s Docker image you want to use as a base image. If you're satified with packages included in this example `Dockerfile`, then please find its corresponding tag version number at the beginning of this README file. Then please replace `<tag>` in line #1 with that tag string.
+Here, first you need to find out the tag version of `pennlinc/docker_r`'s Docker image you want to use as a base image.
+* If you're satified with packages included in this example `Dockerfile`, then you can use the latest tag, which can be found on [PennLINC Docker Hub](https://hub.docker.com/r/pennlinc/docker_r) or in [Releases.md](Releases.md). 
+* You can also use other tags. You can find descriptions of release history in [Releases.md](Releases.md)
 
-!! Warning !! The version of Docker image this example `Dockerfile` generates **may not** be the up-to-date latest version you see on the Docker Hub! So please check out the version number at the beginning of this README file!
+After you determine the tag version you'd like to use, please replace `<tag>` in line #1 with that tag string.
 
 #### Way 2: Build a Docker image from scratch:
 Just copy the example `Dockerfile` from this github repository. Modify it or add more commands for your purposes.
 
-!!warning!! Do not overwrite the example `Dockerfile` in this github repository and push it back to github! Best keep your own `Dockerfile` somewhere else.
+⚠️ ⚠️ WARNING ⚠️ ⚠️ Do not overwrite the example `Dockerfile` in this github repository and push it back to github! Best to keep your own `Dockerfile` somewhere else.
+⚠️ ⚠️ WARNING ⚠️ ⚠️ You can also name the `Dockerfile` with another filename. However, you need to add another argument to specify this when `docker build` - see next step for more.
 
 #### Formatting tips when preparing `Dockerfile`
 * removing spaces at the end of each line of your Dockerfile
@@ -76,6 +84,7 @@ Important notes and tips include:
 * An example `docker_tag` could be `0.0.1`
     * If you modify your `Dockerfile` in the future and want to make an updated Docker image, please make sure you increment the tag version number too! e.g., `0.0.2`, `0.0.3`, ... `0.1.0`, ... `1.0.0`, etc
 * Your `Dockerfile` should be in the same folder as current working directory that your terminal is using
+* If your `Dockerfile` is not named exactly as `Dockerfile`, you must include its filename as an argument too - add this argument *before* the trailing period: `-f <your_Dockerfile_name>`
 
 ### Step 4. Run a test locally (optional, but highly recommended)
  
@@ -92,35 +101,28 @@ $ docker push <docker_username>/<docker_repo>:${docker_tag}
 ```
 
 ### Step 6. Use as Singularity container on clusters
-On clusters, usually there is no Docker installed. Instead, we will pull the Docker image as a Singularity image.
+#### Step 6.1. Pull as as Singularity image
+On clusters, usually there is no Docker installed. Instead, we will pull the Docker image as a Singularity image. You only need to do this pull once if you use the same version of the image.
 
-* If you don't already have a `software` directory in your cluster's project directory, we suggest you make one. Then create a `containers` sub-folder.
-* Pull the Docker image onto cluster:
+If you don't already have a `software` directory in your cluster's project directory, we suggest you make one. Then create a `containers` sub-folder.
+
+Pull the Docker image onto cluster:
  
 ```
 $ singularity pull docker://<docker_username>/<docker_repo>:${docker_tag}
 ```
 
-<details>
-<summary>If you want to directly use the Docker image that's built based on the example `Dockerfile` in this GitHub repoistory:</summary>
-<br>
-
-You should run this command:
+If you want to directly use the example Docker image (that's built based on the example `Dockerfile` in current GitHub repoistory), you can directly run this command (and replace `${docker_tag}` with the version you'd like):
 
 ```
-$ singularity pull docker://audreycluo/r-packages-for-cubic:${docker_tag}
+$ singularity pull docker://pennlinc/docker_r:${docker_tag}
 ```
 
-This prebuilt image is located at: https://hub.docker.com/r/audreycluo/r-packages-for-cubic. Find the tag name you want to use and replace `${docker_tag}` in above command with it. The tag version number this example `Dockerfile` generates can be found at the beginning of this README file.
+⚠️ ⚠️ WARNING ⚠️ ⚠️ You should only *pull* Docker images from `pennlinc` Docker Hub repository, but **should NOT push** to it!!! This Docker Hub repo is for lab's use.
 
-!! Warning !! The version of Docker image this example `Dockerfile` generates **may not** be the up-to-date latest version you see on the Docker Hub! So please check out the version number at the beginning of this README file if you want to use that!
-
-!! Warning !! You can pull Docker images from this Docker Hub repository, but **do NOT push** to it!!! - this is Audrey's personal account!
-</details>
-
-<br>
 After a while, you should have a `.sif` file in your directory. This is the Singularity image that was built based on your Docker image.
 
+#### Step 6.2. Run Singularity image
 To run the Singularity image, use the following commands:
  
 General format:
