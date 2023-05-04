@@ -6,7 +6,7 @@ The Docker image built based on this example `Dockerfile` is publicly available 
 
 https://hub.docker.com/r/pennlinc/docker_r
 
-Descriptions of tagged versions of this Docker image can be found in [Releases.md](Releases.md).
+Descriptions of tagged versions of this Docker image can be found on [Releases page](https://github.com/PennLINC/docker_R/releases).
 
 ## How to directly use the example Docker image?
 Please refer to the below section for [how to use as Singularity container on clusters](#step-6-use-as-singularity-container-on-clusters).
@@ -47,8 +47,8 @@ RUN install2.r --error --ncpus -4 \
 ```
 
 Here, first you need to find out the tag version of `pennlinc/docker_r`'s Docker image you want to use as a base image.
-* If you're satified with packages included in this example `Dockerfile`, then you can use the latest tag, which can be found on [PennLINC Docker Hub](https://hub.docker.com/r/pennlinc/docker_r) or in [Releases.md](Releases.md). 
-* You can also use other tags. You can find descriptions of release history in [Releases.md](Releases.md)
+* If you're satified with packages included in this example `Dockerfile`, then you can use the latest tag, which can be found on [PennLINC Docker Hub](https://hub.docker.com/r/pennlinc/docker_r) or [Releases page](https://github.com/PennLINC/docker_R/releases). 
+* You can also use other tags. You can find descriptions of release history [Releases page](https://github.com/PennLINC/docker_R/releases).
 
 After you determine the tag version you'd like to use, please replace `<tag>` in line #1 with that tag string.
 
@@ -101,7 +101,7 @@ $ docker push <docker_username>/<docker_repo>:${docker_tag}
 ```
 
 ### Step 6. Use as Singularity container on clusters
-#### Step 6.1. Pull as as Singularity image
+#### Step 6.1. Pull as an Singularity image
 On clusters, usually there is no Docker installed. Instead, we will pull the Docker image as a Singularity image. You only need to do this pull once if you use the same version of the image.
 
 If you don't already have a `software` directory in your cluster's project directory, we suggest you make one. Then create a `containers` sub-folder.
