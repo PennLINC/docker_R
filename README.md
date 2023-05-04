@@ -56,6 +56,7 @@ After you determine the tag version you'd like to use, please replace `<tag>` in
 Just copy the example `Dockerfile` from this github repository. Modify it or add more commands for your purposes.
 
 ⚠️ ⚠️ WARNING ⚠️ ⚠️ Do not overwrite the example `Dockerfile` in this github repository and push it back to github! Best to keep your own `Dockerfile` somewhere else.
+
 ⚠️ ⚠️ WARNING ⚠️ ⚠️ You can also name the `Dockerfile` with another filename. However, you need to add another argument to specify this when `docker build` - see next step for more.
 
 #### Formatting tips when preparing `Dockerfile`
