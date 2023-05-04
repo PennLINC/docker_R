@@ -83,6 +83,8 @@ Important notes and tips include:
 $ docker run --rm -it <docker_username>/<docker_repo>:${docker_tag} R
 ```
 
+You should see the printed R version at the beginning. Type `q()` to exit the R environment.
+
 ### Step 5. Push to your Docker Hub repository
  
 ```
