@@ -24,8 +24,8 @@ For example, `R4.1.2_v0.1`
 
 ```console
 # 1. check if R version is consistent w/ that in Dockerfile;
-# 2. increment the version number;
-docker_tag="R4.1.2_v0.1"
+# 2. check the version tag on Docker Hub or on GitHub Releases page; then increment the version number;
+docker_tag="R?????_v?????"    # e.g., "R4.1.2_v0.1"
 
 docker build -t pennlinc/docker_r:${docker_tag} .
 
